@@ -2,29 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:instagram_aulas/feed/presentation/stories/abstract_avatar.dart';
 
 class ActiveAvatar extends AbstractAvatar {
+  ActiveAvatar(String photo) : super(photo);
+
   @override
   Widget build() {
-    return Column(
-      children: const [
-        Padding(
-          padding: EdgeInsets.all(1.5),
-          child: CircleAvatar(
-            backgroundColor: Colors.black,
-            radius: 38,
-            child: CircleAvatar(
-              radius: 35,
-              backgroundImage: AssetImage('assets/images/perfil-instagram.png'),
-            ),
-          ),
+    return Padding(
+      padding: const EdgeInsets.all(1.5),
+      child: CircleAvatar(
+        backgroundColor: Colors.black,
+        radius: 38,
+        child: CircleAvatar(
+          radius: 35,
+          backgroundImage: AssetImage(photo),
         ),
-        Padding(
-          padding: EdgeInsets.only(left: 5.0, right: 5.0),
-          child: Text(
-            'thiago.desales',
-            style: TextStyle(color: Colors.white, fontSize: 12),
-          ),
-        )
-      ],
+      ),
     );
   }
 

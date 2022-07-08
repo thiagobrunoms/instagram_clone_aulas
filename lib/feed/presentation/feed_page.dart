@@ -1,5 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_aulas/feed/domain/load_stories_usecase.dart';
+import 'package:instagram_aulas/feed/domain/story_entity.dart';
 import 'package:instagram_aulas/feed/presentation/appbar/app_bar_widget.dart';
+import 'package:instagram_aulas/feed/presentation/feed_controller.dart';
+import 'package:instagram_aulas/feed/presentation/nicknames/active_nickname.dart';
+import 'package:instagram_aulas/feed/presentation/nicknames/inactive_nickname.dart';
+import 'package:instagram_aulas/feed/presentation/stories/active_avatar.dart';
+import 'package:instagram_aulas/feed/presentation/stories/horizontal_stories_list_widget.dart';
+import 'package:instagram_aulas/feed/presentation/stories/inactive_avatar.dart';
+import 'package:instagram_aulas/feed/presentation/stories/story_widget.dart';
 
 class FeedPage extends StatefulWidget {
   const FeedPage({Key? key}) : super(key: key);
@@ -9,6 +18,16 @@ class FeedPage extends StatefulWidget {
 }
 
 class _FeedPageState extends State<FeedPage> {
+  late FeedController controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    LoadStoriesUsecase usecase = LoadStoriesUsecase();
+    controller = FeedController(usecase: usecase);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,69 +37,26 @@ class _FeedPageState extends State<FeedPage> {
         children: [
           SizedBox(
             height: 100,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: 20,
-              separatorBuilder: (_, index) =>
-                  const Padding(padding: EdgeInsets.only(left: 7)),
-              itemBuilder: (context, index) {
-                return buildAvatar();
+            child: FutureBuilder<List<StoryEntity>>(
+              future: controller.loadStories(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const CircularProgressIndicator();
+                }
+
+                List<StoryEntity> storyEntityList = snapshot.data!;
+
+                return HorizontalStoriesListWidget(
+                  storyEntityList: storyEntityList,
+                );
               },
             ),
           ),
-          Text(
+          const Text(
             'Posts',
             style: TextStyle(color: Colors.white),
           )
         ],
-      ),
-    );
-  }
-
-  Widget buildAvatar() {
-    return Column(
-      children: [
-        _buildCircle(),
-        _buildUsername(),
-      ],
-    );
-  }
-
-  Widget _buildCircle() {
-    return Container(
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          colors: [
-            Colors.red,
-            Colors.yellow[200]!,
-            Colors.purple,
-            Colors.red,
-          ],
-        ),
-      ),
-      child: const Padding(
-        padding: EdgeInsets.all(1.5),
-        child: CircleAvatar(
-          backgroundColor: Colors.black,
-          radius: 38,
-          child: CircleAvatar(
-            radius: 35,
-            backgroundImage: AssetImage('assets/images/perfil-instagram.png'),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildUsername() {
-    return const Padding(
-      padding: EdgeInsets.only(left: 5.0, right: 5.0),
-      child: Text(
-        'thiago.desales',
-        style: TextStyle(color: Colors.white, fontSize: 12),
       ),
     );
   }
