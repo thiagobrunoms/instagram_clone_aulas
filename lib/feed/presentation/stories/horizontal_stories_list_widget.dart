@@ -37,11 +37,11 @@ class _HorizontalStoriesListWidgetState
   StoryWidget _buildStoryWidget(StoryEntity story) {
     return StoryWidget(
       avatar: story.seen
-          ? InactiveAvatar(story.profilePicture)
-          : ActiveAvatar(story.profilePicture),
+          ? InactiveAvatar(user: story.user, radius: 35)
+          : ActiveAvatar(user: story.user, radius: 38),
       nickname: story.seen
-          ? InactiveNickname(size: 12, username: story.username)
-          : ActiveNickname(size: 12, username: story.username),
+          ? InactiveNickname(size: 12, username: story.user.name)
+          : ActiveNickname(size: 12, username: story.user.name),
     );
   }
 }

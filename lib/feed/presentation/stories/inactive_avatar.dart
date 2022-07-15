@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_aulas/feed/domain/user_entity.dart';
 import 'package:instagram_aulas/feed/presentation/stories/abstract_avatar.dart';
 
 class InactiveAvatar extends AbstractAvatar {
-  InactiveAvatar(String photo) : super(photo);
+  InactiveAvatar({required UserEntity user, required double radius})
+      : super(user: user, radius: radius);
 
   @override
   Widget build() {
     return Padding(
       padding: const EdgeInsets.all(1.5),
-      child: CircleAvatar(backgroundImage: AssetImage(photo), radius: 35),
+      child: CircleAvatar(
+          backgroundImage: AssetImage(user.profilePicture), radius: radius),
     );
   }
 

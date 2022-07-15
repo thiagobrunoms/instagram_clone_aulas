@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_aulas/feed/domain/load_stories_usecase.dart';
+import 'package:instagram_aulas/feed/domain/post_entity.dart';
 import 'package:instagram_aulas/feed/domain/story_entity.dart';
+import 'package:instagram_aulas/feed/domain/user_entity.dart';
 import 'package:instagram_aulas/feed/presentation/appbar/app_bar_widget.dart';
 import 'package:instagram_aulas/feed/presentation/feed_controller.dart';
 import 'package:instagram_aulas/feed/presentation/nicknames/active_nickname.dart';
 import 'package:instagram_aulas/feed/presentation/nicknames/inactive_nickname.dart';
+import 'package:instagram_aulas/feed/presentation/posts/post_widget.dart';
 import 'package:instagram_aulas/feed/presentation/stories/active_avatar.dart';
 import 'package:instagram_aulas/feed/presentation/stories/horizontal_stories_list_widget.dart';
 import 'package:instagram_aulas/feed/presentation/stories/inactive_avatar.dart';
@@ -30,33 +33,42 @@ class _FeedPageState extends State<FeedPage> {
 
   @override
   Widget build(BuildContext context) {
+    PostEntity post = PostEntity(
+      description: "Postando essa foto no feed!",
+      postContent: 'assets/images/post-test.png',
+      user: UserEntity(
+          name: 'thiago.desales',
+          profilePicture: 'assets/images/perfil-instagram.png',
+          hasActiveStories: true),
+    );
+
     return Scaffold(
       appBar: const AppBarWidget(),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 100,
-            child: FutureBuilder<List<StoryEntity>>(
-              future: controller.loadStories(),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const CircularProgressIndicator();
-                }
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 100,
+              child: FutureBuilder<List<StoryEntity>>(
+                future: controller.loadStories(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const CircularProgressIndicator();
+                  }
 
-                List<StoryEntity> storyEntityList = snapshot.data!;
+                  List<StoryEntity> storyEntityList = snapshot.data!;
 
-                return HorizontalStoriesListWidget(
-                  storyEntityList: storyEntityList,
-                );
-              },
+                  return HorizontalStoriesListWidget(
+                    storyEntityList: storyEntityList,
+                  );
+                },
+              ),
             ),
-          ),
-          const Text(
-            'Posts',
-            style: TextStyle(color: Colors.white),
-          )
-        ],
+            PostWidget(post: post),
+            PostWidget(post: post),
+          ],
+        ),
       ),
     );
   }

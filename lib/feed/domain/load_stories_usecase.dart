@@ -1,36 +1,40 @@
 import 'package:instagram_aulas/feed/domain/story_entity.dart';
+import 'package:instagram_aulas/feed/domain/user_entity.dart';
 
 class LoadStoriesUsecase {
   Future<List<StoryEntity>> execute() async {
+    UserEntity user = UserEntity(
+        name: 'thiado.desales',
+        profilePicture: 'assets/images/perfil-instagram.png');
     return [
       StoryEntity(
-          username: 'thiado.desales',
-          profilePicture: 'assets/images/perfil-instagram.png',
-          seen: true),
+        user: user,
+        seen: true,
+      ),
       StoryEntity(
-          username: 'thiado.desales',
-          profilePicture: 'assets/images/perfil-instagram.png',
-          seen: false),
+        user: user,
+        seen: false,
+      ),
       StoryEntity(
-          username: 'thiado.desales',
-          profilePicture: 'assets/images/perfil-instagram.png',
-          seen: false),
+        user: user,
+        seen: false,
+      ),
       StoryEntity(
-          username: 'thiado.desales',
-          profilePicture: 'assets/images/perfil-instagram.png',
-          seen: false),
+        user: user,
+        seen: false,
+      ),
       StoryEntity(
-          username: 'thiado.desales',
-          profilePicture: 'assets/images/perfil-instagram.png',
-          seen: false),
+        user: user,
+        seen: false,
+      ),
       StoryEntity(
-          username: 'thiado.desales',
-          profilePicture: 'assets/images/perfil-instagram.png',
-          seen: false),
+        user: user,
+        seen: false,
+      ),
       StoryEntity(
-          username: 'thiado.desales',
-          profilePicture: 'assets/images/perfil-instagram.png',
-          seen: false),
+        user: user,
+        seen: false,
+      ),
     ];
   }
 }

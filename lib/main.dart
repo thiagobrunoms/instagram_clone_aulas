@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_aulas/feed/presentation/comments/post_comments_page.dart';
 import 'package:instagram_aulas/feed/presentation/feed_page.dart';
 
 void main() {
@@ -19,6 +20,9 @@ class MyApp extends StatelessWidget {
         backgroundColor: Colors.black,
       ),
       home: const FeedPage(),
+      routes: {
+        '/toPostComments': (context) => const PostCommentsPage(),
+      },
     );
   }
 }

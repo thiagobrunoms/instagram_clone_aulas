@@ -1,10 +1,8 @@
+import 'package:instagram_aulas/feed/domain/user_entity.dart';
+
 class StoryEntity {
-  String username;
-  String profilePicture;
+  UserEntity user;
   bool seen;
 
-  StoryEntity(
-      {required this.username,
-      required this.profilePicture,
-      required this.seen});
+  StoryEntity({required this.user, required this.seen});
 }

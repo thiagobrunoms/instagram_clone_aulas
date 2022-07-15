@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_aulas/feed/domain/user_entity.dart';
 import 'package:instagram_aulas/feed/presentation/stories/abstract_avatar.dart';
 
 class ActiveAvatar extends AbstractAvatar {
-  ActiveAvatar(String photo) : super(photo);
+  ActiveAvatar({required UserEntity user, required double radius})
+      : super(user: user, radius: radius);
 
   @override
   Widget build() {
@@ -10,10 +12,10 @@ class ActiveAvatar extends AbstractAvatar {
       padding: const EdgeInsets.all(1.5),
       child: CircleAvatar(
         backgroundColor: Colors.black,
-        radius: 38,
+        radius: radius,
         child: CircleAvatar(
-          radius: 35,
-          backgroundImage: AssetImage(photo),
+          radius: radius - 3,
+          backgroundImage: AssetImage(user.profilePicture),
         ),
       ),
     );
